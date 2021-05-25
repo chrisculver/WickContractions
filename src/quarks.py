@@ -13,17 +13,18 @@ class ShortQuark:
             return str(self.flavor) + "_" + str(self.label)
 
 class Quark:
-    def __init__(self, b, f, s, c):
+    def __init__(self, b, f, s, c, t):
         self.barred=b ##is anti-quark
         self.flavor=f
         self.spin=s
         self.color=c
+        self.time=t
 
     def __str__(self):
         if self.barred:
-            return "\\bar{" + str(self.flavor) + "}" + "_{" + str(self.spin) + " " +  str(self.color) + "}"
+            return "\\bar{" + str(self.flavor) + "}" + "_{" + str(self.spin) + " " +  str(self.color) + " " + str(self.time) + "}"
         else:
-            return str(self.flavor) + "_{" + str(self.spin) + " " +  str(self.color) + "}"
+            return str(self.flavor) + "_{" + str(self.spin) + " " +  str(self.color) + " " + str(self.time) + "}"
 
     def __eq__(self, other):
         return (self.barred==other.barred) and (self.flavor==other.flavor) and (self.spin==other.spin) and (self.color==other.color)
