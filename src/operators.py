@@ -31,6 +31,12 @@ class Indexed_Object:
             return (self.name < other.name)
         else:
             return (self.indices < other.indices)
+        
+    def FastorIndices(self):
+        res=''
+        for idx in self.indices[:-1]:
+            res+=idx+','
+        return res+self.indices[-1]
 
 #These basically just allow you to write nicer looking code below.
 class Epsilon_Tensor(Indexed_Object):
@@ -71,4 +77,4 @@ class Full_Propagator(Indexed_Object):
             self.name = 'pBwd'
         if q.time=='tf' and qbar.time=='tf':
             self.name = 'pTf'
-        self.indices=[q.color,q.spin,qbar.color,qbar.spin]
+        self.indices=[q.color,qbar.color,q.spin,qbar.spin]
