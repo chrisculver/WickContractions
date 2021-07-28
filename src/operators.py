@@ -66,15 +66,4 @@ class Spin_Matrix(Indexed_Object):
         self.name = name
         self.indices = [i for i in indices]
 
-class Full_Propagator(Indexed_Object):
-    def __init__(self,q,qbar):
-        #self.name = 'D'+q.flavor+'^{-1}'
-        if q.time=='ti' and qbar.time=='ti':
-            self.name = 'pTi'
-        if q.time=='ti' and qbar.time=='tf':
-            self.name = 'pFwd'
-        if q.time=='tf' and qbar.time=='ti':
-            self.name = 'pBwd'
-        if q.time=='tf' and qbar.time=='tf':
-            self.name = 'pTf'
-        self.indices=[q.color,qbar.color,q.spin,qbar.spin]
+
