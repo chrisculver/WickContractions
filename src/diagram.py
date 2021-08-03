@@ -65,6 +65,24 @@ class Diagram:
                     idx_ends.append(idx[1:])
                 return idx_ends
         return []
+    
+    
+    def create_block(self, color_obj, name):
+        while self.get_first_idx_ends_of(color_obj)!=[]:
+            idx_ends = self.get_first_idx_ends_of(color_obj)
+            time='?'
+            args=[]
+            for elem in self.ci[:]:
+                for idx in elem.indices:
+                    if idx[1:] in idx_ends:
+                        if(elem.name=='V'):
+                            time = elem.arguments[0]
+                        if(elem.name not in [color_obj,name,'V']):
+                            args.append(elem.name)
+                        if(elem.name!=name):
+                            self.ci.remove(elem)
+                        break
+            self.ci.append(Indexed_Function(name,idx_ends,args+[time]))
                 
 
 class Full_Propagator():

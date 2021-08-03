@@ -10,8 +10,6 @@ class Short_Prop():
     
     def __str__(self):
         return self.name + '(' + self.tl + ',' + self.tr + ')' '_{' + self.l + ',' + self.r + '}'
-    
-
 
 def short_props(diag):
     new_props = []
@@ -22,29 +20,10 @@ def short_props(diag):
     diag.props = new_props
     return diag
 
-def create_baryon_block(diag):
-    while diag.get_first_idx_ends_of('eps')!=[]:
-        idx_ends = diag.get_first_idx_ends_of('eps')
-        #print(idx_ends)
-        #to_remove = []
-        time='?'
-        for elem in diag.ci[:]:
-            #print(elem)
-            for idx in elem.indices:
-                #print(idx[1:])
-                if idx[1:] in idx_ends:
-                    if(elem.name=='V'):
-                        time = elem.arguments[0]
-                    if(elem.name!='B'):
-                        diag.ci.remove(elem)
-                    break
-        
-        diag.ci.append(Indexed_Function('B',idx_ends,[time]))
-    return diag
 
 def create_baryon_source(diag):
     for b in diag.ci:    
-        if b.arguments[0]=='tf':
+        if b.arguments[2]=='tf': #only if the baryon has 2 gammas, aka SU(4) only
             for i,contract_idx in enumerate(b.indices):
                 for prop in diag.props:
                     if(contract_idx==prop.l):
@@ -53,38 +32,4 @@ def create_baryon_source(diag):
                         break
                         
             b.arguments += ['ti']
-    return diag
-            
-    
-def create_meson_block(diag):
-    while diag.get_first_idx_ends_of('delta')!=[]:
-        idx_ends = diag.get_first_idx_ends_of('delta')
-        #print(idx_ends)
-        #to_remove = []
-        time='?'
-        for elem in diag.ci[:]:
-            #print(elem)
-            for idx in elem.indices:
-                #print(idx[1:])
-                if idx[1:] in idx_ends:
-                    if(elem.name=='V'):
-                        time = elem.arguments[0]
-                    if(elem.name!='M'):
-                        diag.ci.remove(elem)
-                    break
-        
-        diag.ci.append(Indexed_Function('M',idx_ends,[time]))
-    return diag
-
-def create_meson_source(diag):
-    for m in diag.ci:    
-        if m.arguments[0]=='tf':
-            for i,contract_idx in enumerate(m.indices):
-                for prop in diag.props:
-                    if(contract_idx==prop.l):
-                        m.indices[i]=prop.r
-                        diag.props.remove(prop)
-                        break
-                        
-            m.arguments += ['ti']
     return diag
