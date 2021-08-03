@@ -1,4 +1,5 @@
 from src.wick_utilities import permutations, arePermsEqualParity
+from src.indexed import *
 
 #This file contains the operator class, as well as elementals that are used to
 #create operators.
@@ -8,35 +9,6 @@ class Operator:
         self.ci=ci         #list of commuting Index objects
         self.qj=qj         #list of non-commuting quarks
 
-
-# Base class for everything that isn't a quark,
-# aka commuting objects that are tensors
-class Indexed_Object:
-    def __init__(self,name,indices):
-        self.name = name
-        self.indices = indices
-
-    def cyclic_permute_indices(self):
-        self.indices.rotate(1)
-
-    def __str__(self):
-        idx_str = ''.join([idx for idx in self.indices])
-        return self.name + '_{' + idx_str + '}'
-
-    def __eq__(self, other):
-        return (self.name == other.name) and (self.indices==other.indices)
-
-    def __lt__(self, other):
-        if(self.name != other.name):
-            return (self.name < other.name)
-        else:
-            return (self.indices < other.indices)
-        
-    def FastorIndices(self):
-        res=''
-        for idx in self.indices[:-1]:
-            res+=idx+','
-        return res+self.indices[-1]
 
 #These basically just allow you to write nicer looking code below.
 class Epsilon_Tensor(Indexed_Object):

@@ -13,12 +13,13 @@ class ShortQuark:
             return str(self.flavor) + "_" + str(self.label)
 
 class Quark:
-    def __init__(self, b, f, s, c, t):
+    def __init__(self, b, f, s, c, t, x):
         self.barred=b ##is anti-quark
         self.flavor=f
         self.spin=s
         self.color=c
         self.time=t
+        self.position = x
 
     def __str__(self):
         if self.barred:

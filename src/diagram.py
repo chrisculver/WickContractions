@@ -1,5 +1,6 @@
-from src.operators import Epsilon_Tensor, Indexed_Object
+from src.operators import Epsilon_Tensor
 from src.wick_utilities import permutations
+from src.indexed import Indexed_Object, Indexed_Function
 
 class Diagram:
     def __init__(self, coefs, cis, qs):
@@ -37,12 +38,34 @@ class Diagram:
     
     def laphify(self):
         for elem in self.props:
-            for indices in [elem.left_indices, elem.right_indices]:
+            for i,indices in enumerate([elem.left_indices, elem.right_indices]):
                 color_idx = indices.c
                 idx = 'l'+indices.c[1:]
                 indices.c = idx
-                self.ci.append(Indexed_Object('V',[color_idx, idx, indices.t]))
+                args = []
+                if i==0:
+                    args.append(elem.ti)
+                else:
+                    args.append(elem.tf)
+                self.ci.append(Indexed_Function('V',[color_idx, idx],args))
 
+    def get_first_idx_ends_of(self,name):
+        """ generates a list of the end indices on a named object
+        
+        :param: name: A string
+        
+        :return: list of strings that are the end of the index or an empty list
+                 if no object of that name is in the list.
+        
+        """
+        for elem in self.ci:
+            if(elem.name==name):
+                idx_ends=[]
+                for idx in elem.indices:
+                    idx_ends.append(idx[1:])
+                return idx_ends
+        return []
+                
 
 class Full_Propagator():
     def __init__(self,q,qbar):
@@ -55,31 +78,19 @@ class Full_Propagator():
         #    self.name = 'pBwd'
         #if q.time=='tf' and qbar.time=='tf':
         #    self.name = 'pTf'
-        self.left_indices=Prop_Index(q.color,q.spin,q.time)
-        self.right_indices=Prop_Index(qbar.color,qbar.spin,qbar.time)
+        self.left_indices=Prop_Index(q.color,q.spin)
+        self.right_indices=Prop_Index(qbar.color,qbar.spin)
+        self.ti = q.time
+        self.tf = qbar.time
         
     def __str__(self):
-        return self.name + '_{' + str(self.left_indices) + ' | ' + str(self.right_indices) + '}'
+        return self.name + '(' + self.t1 + ',' + self.t2 + ')' + '_{' + str(self.left_indices) + ' | ' + str(self.right_indices) + '}'
     
 
     
 class Prop_Index():
-    def __init__(self,c,s,t):
+    def __init__(self,c,s):
         self.c=c
         self.s=s
-        self.t=t
     def __str__(self):
-        return self.c + self.s + self.t
-
-    
-class Short_Prop():
-    def __init__(self, name, l, r, tl, tr):
-        self.name = name
-        self.l = l
-        self.r = r
-        self.tl = tl
-        self.tr = tr
-    
-    def __str__(self):
-        return self.name + '(' + self.tl + ',' + self.tr + ')' '_{' + self.l + ',' + self.r + '}'
-    
+        return self.c + ' ' + self.s
