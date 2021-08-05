@@ -102,7 +102,7 @@ class Full_Propagator():
         self.tf = qbar.time
         
     def __str__(self):
-        return self.name + '(' + self.t1 + ',' + self.t2 + ')' + '_{' + str(self.left_indices) + ' | ' + str(self.right_indices) + '}'
+        return self.name + '(' + self.ti + ',' + self.tf + ')' + '_{' + str(self.left_indices) + ' | ' + str(self.right_indices) + '}'
     
 
     
