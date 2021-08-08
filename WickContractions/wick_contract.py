@@ -10,8 +10,8 @@ that contracts a list of quarks.
 
 """
 
-from src.diagram import Diagram
-from src.wick_utilities import permutations,arePermsEqualParity,quarks_same_flavor
+from WickContractions.diagram import Diagram
+from WickContractions.wick_utilities import permutations,arePermsEqualParity,quarks_same_flavor
 
 # Contracts two Operators returning a list of diagrams
 def contract(o1, o2):

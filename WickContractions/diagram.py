@@ -1,6 +1,6 @@
-from src.operators import Epsilon_Tensor
-from src.wick_utilities import permutations
-from src.indexed import Indexed_Object, Indexed_Function
+from WickContractions.elemental_operator import Epsilon_Tensor
+from WickContractions.wick_utilities import permutations
+from WickContractions.indexed import Indexed_Object, Indexed_Function
 
 class Diagram:
     def __init__(self, coefs, cis, qs):

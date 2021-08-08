@@ -1,4 +1,4 @@
-from src.indexed import Indexed_Function
+from WickContractions.indexed import Indexed_Function
 
 class Short_Prop():
     def __init__(self, name, l, r, tl, tr):

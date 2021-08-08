@@ -1,9 +1,9 @@
-from src.wick_utilities import permutations, arePermsEqualParity
-from src.indexed import *
+from WickContractions.wick_utilities import permutations, arePermsEqualParity
+from WickContractions.indexed import *
 
 #This file contains the operator class, as well as elementals that are used to
 #create operators.
-class Operator:
+class ElementalOperator:
     def __init__(self,a,ci,qj):
         self.coef=a        #overall coefficient
         self.ci=ci         #list of commuting Index objects

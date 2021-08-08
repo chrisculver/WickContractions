@@ -1,4 +1,4 @@
-""" Utilities that are definitely used in wick_contractions.py
+""" Utilities for wick_contractions.py
 
 This file only contains functions used to perform the wick_contractions on
 a list of quarks.  You can generate permutations, check whether or not two
