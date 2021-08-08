@@ -20,8 +20,11 @@ class Diagram:
         return str(self.coef) + ' ' + ci_str + prop_str
 
     def __eq__(self, other):
-        return (self.coef == other.coef) and (self.ci==other.ci)
-
+        return (self.coef == other.coef) and (self.ci==other.ci) and (self.props==other.props)
+    
+    def equivalent(self, other):
+        return (self.ci==other.ci) and (self.props==other.props)
+        
 
     #check whether or not two diagrams are related by any of the symmetries
     #provided, we allow a flexible list, since there's no point in using properties
@@ -104,6 +107,9 @@ class Full_Propagator():
     def __str__(self):
         return self.name + '(' + self.ti + ',' + self.tf + ')' + '_{' + str(self.left_indices) + ' | ' + str(self.right_indices) + '}'
     
+    def __eq__(self,other):
+        return self.name==other.name and self.left_indices==other.left_indices and self.right_indices==other.right_indices and self.ti==other.ti and self.tf==other.tf
+    
 
     
 class Prop_Index():
@@ -112,3 +118,5 @@ class Prop_Index():
         self.s=s
     def __str__(self):
         return self.c + ' ' + self.s
+    def __eq__(self,other):
+        return self.c==other.c and self.s==other.s
