@@ -107,6 +107,9 @@ class Full_Propagator():
     def __str__(self):
         return self.name + '(' + self.ti + ',' + self.tf + ')' + '_{' + str(self.left_indices) + ' | ' + str(self.right_indices) + '}'
     
+    def latexStr(self):
+        return self.name + '(' + self.ti.replace('t','x') + self.ti + '\mid ' + self.tf.replace('t','x') + self.tf + ')' + '_{\\substack{' + self.left_indices.s + '\\\\' + self.left_indices.c + '}' +  '\\substack{' + self.right_indices.s + '\\\\' + self.right_indices.c + '}}'
+    
     def __eq__(self,other):
         return self.name==other.name and self.left_indices==other.left_indices and self.right_indices==other.right_indices and self.ti==other.ti and self.tf==other.tf
     
