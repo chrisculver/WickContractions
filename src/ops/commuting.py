@@ -1,4 +1,5 @@
 from src.ops.indexed import IndexedObject
+from src.wick.utilities import permutations, arePermsEqualParity
 
 
 class Epsilon_Tensor(IndexedObject):
@@ -22,4 +23,4 @@ class Epsilon_Tensor(IndexedObject):
             return 0
 
     def get_labels(self):
-        return [ i for i in indices ]
+        return [ i for i in self.indices ]

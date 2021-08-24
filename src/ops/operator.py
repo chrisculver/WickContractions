@@ -14,6 +14,6 @@ class Operator:
         """Printer to str
         """
         eStr=""
-        for e in elementals[:-1]:
+        for e in self.elementals[:-1]:
             eStr+=str(e)+"+"
-        return eStr+str(elementals[-1])
+        return eStr+str(self.elementals[-1])

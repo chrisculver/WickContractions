@@ -20,11 +20,11 @@ class ElementalOperator:
         """Printing to string
         """
         cStr="*"
-        for c in commuting[:-1]:
+        for c in self.commuting[:-1]:
             cStr+=str(c)+"*"
-        cStr+=str(commuting[-1])
+        cStr+=str(self.commuting[-1])
         qStr=""
-        for q in quarks[:-1]:
+        for q in self.quarks[:-1]:
             qStr+=str(q)+"*"
-        qStr+=str(quarks[-1])
-        return str(coef)+cStr+qStr
+        qStr+=str(self.quarks[-1])
+        return str(self.coef)+cStr+qStr
