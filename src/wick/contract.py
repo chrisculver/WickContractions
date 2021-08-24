@@ -31,8 +31,8 @@ def contract_elementals(o1, o2):
         :return: List of diagrams
     """
     # separate out the commuting and anti-commuting objects
-    quarks = o1.qj + o2.qj
-    commuting_objs = o1.ci + o2.ci
+    quarks = o1.quarks + o2.quarks
+    commuting_objs = o1.commuting + o2.commuting
     #find all permutations of quarks which can be combined to propagators.
     contracted_quarks = contract_quarks(quarks)
 
@@ -40,7 +40,7 @@ def contract_elementals(o1, o2):
     # the list of commuting objects, and a list of quarks which become propagators
     diagrams = []
     for qs in contracted_quarks:
-        diagrams.append( Diagram(o1.coef*o2.coef*(1 if arePermsEqualParity(quarks,qs) else -1),
+        diagrams.append( Diagram(o1.coef*o2.coef*(1 if util.arePermsEqualParity(quarks,qs) else -1),
                  commuting_objs,
                  qs )
                        )

@@ -1,12 +1,19 @@
 from src.diags.propagator import FullPropagator
 
 class Diagram:
-    def __init__(self, coefs, cis, qs):
+    def __init__(self, coefs, cis, qs=[], props=[]):
         self.coef = coefs
         self.ci = cis[:] # I need this otherwise cis gets modified....  what????
-        self.props = []
-        for p in range(0,len(qs)//2):
-            self.props.append(FullPropagator(qs[2*p],qs[2*p+1]))
+
+        if qs!=[]:
+            self.props = []
+            for p in range(0,len(qs)//2):
+                self.props.append(FullPropagator(qs[2*p],qs[2*p+1]))
+        elif props!=[]:
+            self.props=props
+        else:
+            raise ValueError("Either qs or props must be passed to Diagram constructor")
+
         ### Since all these diagrams are commuting, let's sort them, this will
         ### make comparisons across various diagrams much easier.
         self.ci=sorted(self.ci)

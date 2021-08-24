@@ -1,8 +1,8 @@
 class FullPropagator():
     def __init__(self,q,qbar):
         self.name = 'prop^'+q.flavor
-        self.left_indices=Prop_Index(q.color,q.spin)
-        self.right_indices=Prop_Index(qbar.color,qbar.spin)
+        self.left_indices=PropIndex(q.color,q.spin)
+        self.right_indices=PropIndex(qbar.color,qbar.spin)
         self.ti = q.time
         self.tf = qbar.time
 
@@ -16,7 +16,7 @@ class FullPropagator():
         return self.name==other.name and self.left_indices==other.left_indices and self.right_indices==other.right_indices and self.ti==other.ti and self.tf==other.tf
 
 
-class Prop_Index():
+class PropIndex():
     def __init__(self,c,s):
         self.c=c
         self.s=s

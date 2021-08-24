@@ -1,7 +1,7 @@
-from indexed import IndexedObject
+from src.ops.indexed import IndexedObject
 
 
-class Epsilon_Tensor(Indexed_Object):
+class Epsilon_Tensor(IndexedObject):
     """ Symbolic epsilon tensor
     """
     def __init__(self,indices):
