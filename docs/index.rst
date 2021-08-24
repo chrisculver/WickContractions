@@ -21,9 +21,6 @@ This code performs the wick contractions
   :maxdepth: 2
   :caption: API
 
-  API/wick_contract.rst
-  API/wick_utilities.rst
-
 
 
 

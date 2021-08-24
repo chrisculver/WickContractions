@@ -1,0 +1,19 @@
+
+
+class Operator:
+    """ An operator is a linear combination of :class:`src.ops.ElementalOperator`.
+        :param elementals: The elementals that create the operator
+        :type elementals: List of :class:`src.ops.ElementalOperator`
+    """
+    def __init__(self, elementals):
+        """Constructor
+        """
+        self.elementals=elementals
+
+    def __str__(self):
+        """Printer to str
+        """
+        eStr=""
+        for e in elementals[:-1]:
+            eStr+=str(e)+"+"
+        return eStr+str(elementals[-1])
