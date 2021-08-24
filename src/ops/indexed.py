@@ -1,19 +1,33 @@
 class IndexedObject:
+    """Container for an object that has indices
+        :param name: Name of the object
+        :param indices: Indices attached to it
+    """
     def __init__(self,name,indices):
+        """Constructor
+        """
         self.name = name
         self.indices = indices
 
     def cyclic_permute_indices(self):
+        """Return the object with it's indices cyclicly permuted once.
+        """
         self.indices.rotate(1)
 
     def __str__(self):
+        """String printer
+        """
         idx_str = ''.join([idx+' ' for idx in self.indices])
         return self.name + '_{' + idx_str + '}'
 
     def __eq__(self, other):
+        """Equality comparison
+        """
         return (self.name == other.name) and (self.indices==other.indices)
 
     def __lt__(self, other):
+        """Less then operator
+        """
         if(self.name != other.name):
             return (self.name < other.name)
         else:
@@ -21,12 +35,21 @@ class IndexedObject:
 
 
 class IndexedFunction(IndexedObject):
+    """Container for an object with indices and arguments
+        :param name: Name of the object
+        :param indices: Indices attached to the argument
+        :param arguments: Arguments the object depends on
+    """
     def __init__(self, name, indices, arguments):
+        """Constructor
+        """
         self.name = name
         self.indices = indices
         self.arguments = arguments
 
     def __str__(self):
+        """String printer
+        """
         idx_str = ''
         for i in range(len(self.indices)):
             idx_str += self.indices[i]
@@ -40,9 +63,13 @@ class IndexedFunction(IndexedObject):
         return self.name + '(' + arg_str + ')_{' + idx_str + '}'
 
     def __eq__(self, other):
+        """Equality comparison
+        """
         return (self.name == other.name) and (self.indices==other.indices) and (self.arguments==self.arguments)
 
     def __lt__(self, other):
+        """Less then operator
+        """
         if(self.name != other.name):
             return (self.name < other.name)
         else:

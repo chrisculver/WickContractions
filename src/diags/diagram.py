@@ -1,9 +1,20 @@
 from src.diags.propagator import FullPropagator
 
 class Diagram:
-    def __init__(self, coefs, cis, qs=[], props=[]):
-        self.coef = coefs
-        self.ci = cis[:] # I need this otherwise cis gets modified....  what????
+    """Container for the commuting objects and propagators the need to be
+        computed after wick contractions.  The correlation function is a linear
+        combination of diagrams.  Either quarks or propagators could be
+        passed to the correlator but not both.
+        :param coef: Diagram coefficient
+        :param commuting: Commuting objectings
+        :param qs: List of quarks to turn into propagators
+        :param props: List of propagators (should only be used for testing)
+    """
+    def __init__(self, coef, commuting, qs=[], props=[]):
+        """Constructor
+        """
+        self.coef = coef
+        self.commuting = commuting[:] # I need this otherwise cis gets modified....  what????
 
         if qs!=[]:
             self.props = []
@@ -16,16 +27,17 @@ class Diagram:
 
         ### Since all these diagrams are commuting, let's sort them, this will
         ### make comparisons across various diagrams much easier.
-        self.ci=sorted(self.ci)
+        self.commuting=sorted(self.commuting)
         #self.props=sorted(self.props)
 
     def __str__(self):
-        ci_str = ''.join([str(c) for c in self.ci])
+        """Printer to str
+        """
+        ci_str = ''.join([str(c) for c in self.commuting])
         prop_str = ''.join([str(p) for p in self.props])
         return str(self.coef) + ' ' + ci_str + prop_str
 
     def __eq__(self, other):
-        return (self.coef == other.coef) and (self.ci==other.ci) and (self.props==other.props)
-
-    def equivalent(self, other):
-        return (self.ci==other.ci) and (self.props==other.props)
+        """Equality comparison
+        """
+        return (self.coef == other.coef) and (self.commuting==other.commuting) and (self.props==other.props)

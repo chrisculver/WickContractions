@@ -121,3 +121,9 @@ def test_nucleon_elemental_contraction():
     print(nucleon_expected()[1])
 
     assert contract_elementals(annihilate_nucleon,create_nucleon)==nucleon_expected()
+
+
+def test_nucleon_contraction():
+    create_nucleon=Operator([nucleon_creation_elemental()])
+    annihilate_nucleon=Operator([nucleon_annihilation_elemental()])
+    assert contract(annihilate_nucleon,create_nucleon)==nucleon_expected()
