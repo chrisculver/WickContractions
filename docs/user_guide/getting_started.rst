@@ -1,8 +1,14 @@
 .. _getting_started:
 
+
+Overview
+========
+The main use of this code is to compute wick contractions between LQCD operators.
+
+
+
+
 Getting Started
 ===============
 
-To run the code, you need to set-up the creation and annihilation operators.
-While more details are provided in :ref:`sec-operators`, in tests/test_contractions.py
-there are examples for pions and nucleons.
+[TODO] Actual description of how to run the code, and do the most useful things.

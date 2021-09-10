@@ -6,7 +6,10 @@
 Wick Contractions
 =================
 
-This code performs the wick contractions
+This code is a work in progress, and is expanding beyond just a repository
+for performing wick contractions.  Functionality will be added to make it more
+like http://github.com/chrisculver/CorrelationMatrixManager, which only works
+for mesons.  This code base should work for any object composed of quarks.
 
 .. toctree::
    :maxdepth: 2
@@ -20,7 +23,7 @@ This code performs the wick contractions
 .. toctree::
   :maxdepth: 3
   :caption: API
-  
+
 
 
 
