@@ -40,7 +40,7 @@ def contract_elementals(o1, o2):
     # the list of commuting objects, and a list of quarks which become propagators
     diagrams = []
     for qs in contracted_quarks:
-        diagrams.append( Diagram(o1.coef*o2.coef*(1 if util.arePermsEqualParity(quarks,qs) else -1),
+        diagrams.append( Diagram(o1.coef*o2.coef*(1. if util.arePermsEqualParity(quarks,qs) else -1.),
                  commuting_objs,
                  qs )
                        )
