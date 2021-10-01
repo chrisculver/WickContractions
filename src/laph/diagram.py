@@ -17,8 +17,10 @@ class LDiagram(src.diags.diagram.Diagram):
                 args=[]
                 if i==0:
                     args.append(p.xi)
+                    args.append(p.ti)
                 else:
                     args.append(p.xf)
+                    args.append(p.tf)
                 if i==0: 
                     self.commuting.append(IndexedFunction('V*',[color_idx, idx],args))
                 else:
@@ -42,7 +44,10 @@ class LDiagram(src.diags.diagram.Diagram):
         return []
     
     
-    def create_block(self, color_obj, name):
+    def create_baryon_blocks(self):
+        # TODO make it handle V and V* better to create T and T^*
+        color_obj='eps'
+        name=''
         while self.get_first_idx_ends_of(color_obj)!=[]:
             idx_ends = self.get_first_idx_ends_of(color_obj)
             time='?'
@@ -51,8 +56,12 @@ class LDiagram(src.diags.diagram.Diagram):
                 for idx in elem.indices:
                     if idx[1:] in idx_ends:
                         if(elem.name=='V'):
-                            time = elem.arguments[0]
-                        if(elem.name not in [color_obj,name,'V']):
+                            name = 'B'
+                            time=elem.arguments[1]
+                        if(elem.name=='V*'):
+                            name = 'B*'
+                            time=elem.arguments[1]
+                        if(elem.name not in [color_obj,name,'V','V*']):
                             args.append(elem.name)
                         if(elem.name!=name):
                             self.commuting.remove(elem)
