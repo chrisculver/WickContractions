@@ -67,3 +67,38 @@ class LDiagram(src.diags.diagram.Diagram):
                             self.commuting.remove(elem)
                         break
             self.commuting.append(IndexedFunction(name,idx_ends,args+[time]))
+
+    def short_props(self):
+        new_props = []
+        for prop in self.props:
+            new_props.append(ShortProp(prop.name,
+                                    prop.left_indices.c[1:],prop.right_indices.c[1:],
+                                    prop.ti,prop.tf))
+        self.props = new_props
+
+            
+    def create_baryon_source(self):
+        for b in self.commuting:    
+            if b.arguments[2]=='tf': #only if the baryon has 2 gammas, aka SU(4) only
+                for i,contract_idx in enumerate(b.indices):
+                    for prop in self.props:
+                        if(contract_idx==prop.l):
+                            b.indices[i]=prop.r
+                            self.props.remove(prop)
+                            break
+                        
+                b.arguments += ['ti']
+                
+                
+                
+class ShortProp():
+    def __init__(self, name, l, r, tl, tr):
+        self.name = name
+        self.l = l
+        self.r = r
+        self.tl = tl
+        self.tr = tr
+    
+    def __str__(self):
+        return self.name + '(' + self.tl + ',' + self.tr + ')' '_{' + self.l + ',' + self.r + '}'
+
