@@ -27,4 +27,4 @@ class ElementalOperator:
         for q in self.quarks[:-1]:
             qStr+=str(q)+"*"
         qStr+=str(self.quarks[-1])
-        return str(self.coef)+cStr+qStr
+        return str(self.coef)+cStr+'*'+qStr

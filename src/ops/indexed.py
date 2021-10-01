@@ -1,4 +1,4 @@
-from src.wick.utilities import permutations, arePermsEqualParity
+from collections import deque
 
 class IndexedObject:
     """Container for an object that has indices
@@ -14,12 +14,18 @@ class IndexedObject:
     def cyclic_permute_indices(self):
         """Return the object with it's indices cyclicly permuted once.
         """
-        self.indices.rotate(1)
+        tmp=deque(self.indices)
+        tmp.rotate(1)
+        self.indices=list(tmp)
 
     def __str__(self):
         """String printer
         """
-        idx_str = ''.join([idx+' ' for idx in self.indices])
+        idx_str = ''
+        for i in range(len(self.indices)):
+            idx_str += self.indices[i]
+            if(i!=len(self.indices)-1):
+                idx_str += ' '
         return self.name + '_{' + idx_str + '}'
 
     def __eq__(self, other):
@@ -78,28 +84,3 @@ class IndexedFunction(IndexedObject):
             self_strings = self.indices + self.arguments
             other_strings = other.indices + other.arguments
             return (self_strings < other_strings)
-
-
-class EpsilonTensor(IndexedObject):
-    def __init__(self,indices):
-        self.name = 'eps'
-        self.indices = [i for i in indices]
-
-    def get_permutations(self):
-        return [  EpsilonTensor(perm)
-                    for perm in permutations(self.indices)  ]
-
-    #return +1/-1 if eps is a even/odd permutation, 0 if not.
-    def sign_of_permutation(self, eps):
-        if( eps in self.get_permutations() ):
-            #[ print(idx) for idx in eps.indices ]
-            #[ print(idx) for idx in self.indices ]
-            return (1 if arePermsEqualParity(eps.indices, self.indices) else -1)
-        else:
-            return 0
-        
-
-class SpinMatrix(IndexedObject):
-    def __init__(self,name,indices):
-        self.name = name
-        self.indices = [i for i in indices]
