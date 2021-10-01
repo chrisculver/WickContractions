@@ -1,3 +1,5 @@
+from src.wick.utilities import permutations, arePermsEqualParity
+
 class IndexedObject:
     """Container for an object that has indices
         :param name: Name of the object
@@ -84,7 +86,7 @@ class EpsilonTensor(IndexedObject):
         self.indices = [i for i in indices]
 
     def get_permutations(self):
-        return [  Epsilon_Tensor(perm)
+        return [  EpsilonTensor(perm)
                     for perm in permutations(self.indices)  ]
 
     #return +1/-1 if eps is a even/odd permutation, 0 if not.
@@ -95,10 +97,7 @@ class EpsilonTensor(IndexedObject):
             return (1 if arePermsEqualParity(eps.indices, self.indices) else -1)
         else:
             return 0
-
-    def get_labels(self):
-        return [ i for i in indices ]
-
+        
 
 class SpinMatrix(IndexedObject):
     def __init__(self,name,indices):
