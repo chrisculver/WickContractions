@@ -1,9 +1,9 @@
 import WickContractions.diags.diagram
 from WickContractions.ops.indexed import IndexedFunction
 
-class LDiagram(src.diags.diagram.Diagram):
+class LDiagram(WickContractions.diags.diagram.Diagram):
     def __init__(self, diag):
-        if(type(diag) is not src.diags.diagram.Diagram):
+        if(type(diag) is not WickContractions.diags.diagram.Diagram):
             raise ValueError("Must make Laph diagram out of src.diags.Diagram")
         self.coef = diag.coef
         self.commuting = diag.commuting
