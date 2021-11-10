@@ -7,7 +7,7 @@ class FullPropagator():
     def __init__(self,q,qbar):
         """Constructor
         """
-        self.name = 'prop^'+q.flavor
+        self.name = 'D^{-1}_{'+q.flavor+'}'
         self.left_indices=PropIndex(q.color,q.spin)
         self.right_indices=PropIndex(qbar.color,qbar.spin)
         self.ti = q.time
@@ -18,7 +18,7 @@ class FullPropagator():
     def __str__(self):
         """String printer
         """
-        return self.name + '(' + self.xi + self.ti + '\\mid ' + self.xf + self.tf + ')' + '_{\\substack{' + self.left_indices.s + '\\\\' + self.left_indices.c + '}' +  '\\substack{' + self.right_indices.s + '\\\\' + self.right_indices.c + '}}'
+        return self.name + '(' + self.xi + ',' + self.ti + '\\mid ' + self.xf + ',' + self.tf + ')' + '_{\\substack{' + self.left_indices.s + '\\\\' + self.left_indices.c + '}' +  '\\substack{' + self.right_indices.s + '\\\\' + self.right_indices.c + '}}'
 
     def __eq__(self,other):
         """Equality comparison

@@ -1,17 +1,16 @@
 # Readme
 
 This code computes the wick contractions for LQCD operators that contain
-quark fields.  The final result is a list of diagrams, which can be computed
-with any LQCD software stack.  This code is INCOMPLETE.  But does turn a
-list of quarks into a list of list of diagrams.
+quark fields.  The final result is a list of diagrams that are to be 
+evaluated numerically to obtain the correlation function.
+
 
 ## Examples
 Features of this code are being worked on in prototyping.nb, which includes a
-simple SU(4) baryon-baryon scattering contraction.
+simple SU(4) baryon-baryon scattering contraction with LapH.
 
-The main usage of this code can be seen in test_contractions.py, where SU(3)
-pion and nucleon correlation functions are checked explicitly.  Additional
-functionality, for reducing the number of diagrams, can be found in 'blank'.
+Usage of this code without LapH can be seen in test_contractions.py, where SU(3)
+pion and nucleon correlation functions are checked explicitly.
 
 ## Tests and Code Coverage
 
@@ -19,13 +18,9 @@ To run all the tests type
     coverage run -m pytest
 Then
     coverage report -m  
-To make this work I have added an empty conftest.py to src, to trick pytest.
+To make this work I have added an empty conftest.py to WickContractions, to trick pytest.
 
 ## Docs
-
-example of autodocing api - 'sphinx-apidoc -o API/ src/ops/'
-
-
 CURRENTLY BROKEN
 To create the docs type 'make html' or 'make latex' in the top directory.
 If you make latex then go into docs/latex and type make again to generate the pdf.

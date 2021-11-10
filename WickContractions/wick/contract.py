@@ -1,5 +1,5 @@
-from src.diags.diagram import Diagram
-import src.wick.utilities as util
+from WickContractions.diags.diagram import Diagram
+import WickContractions.wick.utilities as util
 
 
 def contract(o1, o2):

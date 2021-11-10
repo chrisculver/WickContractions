@@ -1,5 +1,5 @@
-import src.diags.diagram
-from src.ops.indexed import IndexedFunction
+import WickContractions.diags.diagram
+from WickContractions.ops.indexed import IndexedFunction
 
 class LDiagram(src.diags.diagram.Diagram):
     def __init__(self, diag):

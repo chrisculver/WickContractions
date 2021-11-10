@@ -1,4 +1,4 @@
-from src.ops.quarks import Quark, ShortQuark
+from WickContractions.ops.quarks import Quark, ShortQuark
 
 
 def test_equality():

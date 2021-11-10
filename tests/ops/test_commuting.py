@@ -1,4 +1,4 @@
-from src.ops.commuting import *
+from WickContractions.ops.commuting import *
 
 def test_epsilon():
     eps3 = EpsilonTensor(['a','b','c'])

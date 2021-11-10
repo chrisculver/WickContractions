@@ -1,4 +1,4 @@
-from src.diags.propagator import FullPropagator
+from WickContractions.diags.propagator import FullPropagator
 
 class Diagram:
     """Container for the commuting objects and propagators the need to be

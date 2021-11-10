@@ -1,7 +1,7 @@
-from src.ops.operator import *
-from src.ops.elemental import *
-from src.ops.commuting import *
-from src.ops.quarks import *
+from WickContractions.ops.operator import *
+from WickContractions.ops.elemental import *
+from WickContractions.ops.commuting import *
+from WickContractions.ops.quarks import *
 
 def test_op_str():
     g=SpinMatrix('g',['s0','s1'])

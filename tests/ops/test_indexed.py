@@ -1,4 +1,4 @@
-from src.ops.indexed import *
+from WickContractions.ops.indexed import *
 import copy
 
 def test_indexedobject():

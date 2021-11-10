@@ -1,5 +1,5 @@
-from src.ops.indexed import IndexedObject
-from src.wick.utilities import permutations, arePermsEqualParity
+from WickContractions.ops.indexed import IndexedObject
+from WickContractions.wick.utilities import permutations, arePermsEqualParity
 
 class EpsilonTensor(IndexedObject):
     def __init__(self,indices):

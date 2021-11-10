@@ -1,10 +1,10 @@
-from src.wick.contract import contract, contract_quarks, contract_elementals
-from src.ops.quarks import Quark
-from src.ops.elemental import ElementalOperator
-from src.ops.operator import Operator
-from src.ops.commuting import IndexedObject
-from src.diags.diagram import Diagram
-from src.diags.propagator import FullPropagator
+from WickContractions.wick.contract import contract, contract_quarks, contract_elementals
+from WickContractions.ops.quarks import Quark
+from WickContractions.ops.elemental import ElementalOperator
+from WickContractions.ops.operator import Operator
+from WickContractions.ops.commuting import IndexedObject
+from WickContractions.diags.diagram import Diagram
+from WickContractions.diags.propagator import FullPropagator
 
 def test_quark_contraction():
     qubar0=Quark(True,'u',"s0","c0","t0","x0")
