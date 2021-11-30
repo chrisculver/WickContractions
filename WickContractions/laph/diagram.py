@@ -1,9 +1,9 @@
-import WickContractions.diags.diagram
+import WickContractions.corrs.diagram
 from WickContractions.ops.indexed import IndexedFunction
 
-class LDiagram(WickContractions.diags.diagram.Diagram):
+class LDiagram(WickContractions.corrs.diagram.Diagram):
     def __init__(self, diag):
-        if(type(diag) is not WickContractions.diags.diagram.Diagram):
+        if(type(diag) is not WickContractions.corrs.diagram.Diagram):
             raise ValueError("Must make Laph diagram out of src.diags.Diagram")
         self.coef = diag.coef
         self.commuting = diag.commuting
@@ -79,7 +79,7 @@ class LDiagram(WickContractions.diags.diagram.Diagram):
             
     def create_baryon_source(self):
         for b in self.commuting:    
-            if b.arguments[2]=='tf': #only if the baryon has 2 gammas, aka SU(4) only
+            if b.arguments[1]=='tf': #only if the baryon has 2 gammas, aka SU(4) only
                 for i,contract_idx in enumerate(b.indices):
                     for prop in self.props:
                         if(contract_idx==prop.l):

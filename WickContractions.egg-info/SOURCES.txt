@@ -1,0 +1,6 @@
+README.md
+setup.py
+WickContractions.egg-info/PKG-INFO
+WickContractions.egg-info/SOURCES.txt
+WickContractions.egg-info/dependency_links.txt
+WickContractions.egg-info/top_level.txt

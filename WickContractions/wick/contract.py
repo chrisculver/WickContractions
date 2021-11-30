@@ -1,4 +1,5 @@
-from WickContractions.diags.diagram import Diagram
+from WickContractions.corrs.diagram import Diagram
+from WickContractions.corrs.correlator import Correlator
 import WickContractions.wick.utilities as util
 
 
@@ -18,7 +19,7 @@ def contract(o1, o2):
             for d in new_diags:
                 diagrams.append(d)
 
-    return diagrams
+    return Correlator(diagrams)
 
 
 # Contracts two Operators returning a list of diagrams

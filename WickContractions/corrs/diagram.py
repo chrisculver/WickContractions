@@ -1,7 +1,7 @@
-from WickContractions.diags.propagator import FullPropagator
+from WickContractions.corrs.propagator import FullPropagator
 
 class Diagram:
-    """Container for the commuting objects and propagators the need to be
+    """Container for the commuting objects and propagators that need to be
         computed after wick contractions.  The correlation function is a linear
         combination of diagrams.  Either quarks or propagators could be
         passed to the correlator but not both.

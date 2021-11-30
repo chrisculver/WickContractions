@@ -1,4 +1,4 @@
-from WickContractions.diags.diagram import Diagram
+from WickContractions.corrs.diagram import Diagram
 import pytest
 
 def test_diagram_fails():

@@ -1,4 +1,4 @@
-from WickContractions.diags.propagator import PropIndex
+from WickContractions.corrs.propagator import PropIndex
 
 def test_index():
     p=PropIndex('c','s')

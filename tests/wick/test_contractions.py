@@ -3,8 +3,9 @@ from WickContractions.ops.quarks import Quark
 from WickContractions.ops.elemental import ElementalOperator
 from WickContractions.ops.operator import Operator
 from WickContractions.ops.commuting import IndexedObject
-from WickContractions.diags.diagram import Diagram
-from WickContractions.diags.propagator import FullPropagator
+from WickContractions.corrs.correlator import Correlator
+from WickContractions.corrs.diagram import Diagram
+from WickContractions.corrs.propagator import FullPropagator
 
 def test_quark_contraction():
     qubar0=Quark(True,'u',"s0","c0","t0","x0")
@@ -64,7 +65,7 @@ def test_pion_contraction():
     create_pion=Operator([pion_creation_elemental()])
     annihilate_pion=Operator([pion_annihilation_elemental()])
 
-    assert contract(annihilate_pion,create_pion)==pion_expected()
+    assert contract(annihilate_pion,create_pion).diagrams==pion_expected()
 
 
 def nucleon_creation_elemental():
@@ -126,4 +127,4 @@ def test_nucleon_elemental_contraction():
 def test_nucleon_contraction():
     create_nucleon=Operator([nucleon_creation_elemental()])
     annihilate_nucleon=Operator([nucleon_annihilation_elemental()])
-    assert contract(annihilate_nucleon,create_nucleon)==nucleon_expected()
+    assert contract(annihilate_nucleon,create_nucleon).diagrams==nucleon_expected()
