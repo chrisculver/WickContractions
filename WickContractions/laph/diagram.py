@@ -54,7 +54,12 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
             args=[]
             for elem in self.commuting[:]:
                 for idx in elem.indices:
-                    if idx[1:] in idx_ends:
+                    search_for = '0'
+                    if idx[0] not in ['{}'.format(i) for i in range(0,10)]:
+                        search_for = idx[1:]
+                    else:
+                        search_for = idx
+                    if search_for in idx_ends:
                         if(elem.name=='V'):
                             name = 'B'
                             time=elem.arguments[1]
