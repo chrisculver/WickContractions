@@ -3,7 +3,7 @@ from WickContractions.wick.utilities import permutations, arePermsEqualParity
 
 class EpsilonTensor(IndexedObject):
     def __init__(self,indices):
-        self.name = 'eps'
+        self.name = '\\epsilon'
         self.indices = [i for i in indices]
 
     def get_permutations(self):

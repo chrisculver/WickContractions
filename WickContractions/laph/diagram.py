@@ -1,4 +1,5 @@
 import WickContractions.corrs.diagram
+import copy
 from WickContractions.ops.indexed import IndexedFunction
 
 class LDiagram(WickContractions.corrs.diagram.Diagram):
@@ -8,11 +9,17 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
         self.coef = diag.coef
         self.commuting = diag.commuting
         self.props = diag.props
+        self.Tblocks = {}
+        self.Bblocks= {}
         
+        lCnt=0
         for p in self.props:
+            p.name='\\tau'
             for i,indices in enumerate([p.left_indices,p.right_indices]):
+                # swap color for eigenvector idx
                 color_idx = indices.c
-                idx='l'+indices.c[1:]
+                idx='l_{'+str(lCnt)+'}'
+                lCnt+=1
                 indices.c=idx
                 args=[]
                 if i==0:
@@ -39,40 +46,91 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
             if(elem.name==name):
                 idx_ends=[]
                 for idx in elem.indices:
-                    idx_ends.append(idx[1:])
+                    idx_ends.append(idx[2:])
                 return idx_ends
         return []
     
     
-    def create_baryon_blocks(self):
-        # TODO make it handle V and V* better to create T and T^*
-        color_obj='eps'
-        name=''
-        while self.get_first_idx_ends_of(color_obj)!=[]:
-            idx_ends = self.get_first_idx_ends_of(color_obj)
-            time='?'
-            args=[]
-            for elem in self.commuting[:]:
-                for idx in elem.indices:
-                    search_for = '0'
-                    if idx[0] not in ['{}'.format(i) for i in range(0,10)]:
-                        search_for = idx[1:]
-                    else:
-                        search_for = idx
-                    if search_for in idx_ends:
-                        if(elem.name=='V'):
-                            name = 'B'
-                            time=elem.arguments[1]
-                        if(elem.name=='V*'):
-                            name = 'B*'
-                            time=elem.arguments[1]
-                        if(elem.name not in [color_obj,name,'V','V*']):
-                            args.append(elem.name)
-                        if(elem.name!=name):
+    def create_T_blocks(self):
+        color_obj_name = '\\epsilon' 
+        epsilons=[]
+        for elem in reversed(self.commuting):
+            if elem.name==color_obj_name:
+                epsilons.append(elem)
+                self.commuting.remove(elem)
+        
+        for e in epsilons:
+            # start a T function with no indices or arguments
+            Tblock = IndexedFunction('T',[],[])
+            TblockEquals = [e]
+            for idx in e.indices:
+                for elem in self.commuting:
+                    if elem.name not in ['T','T^*']:
+                        if idx in elem.indices:
+                            TblockEquals.append(elem)
+                            new_indices = list(elem.indices)
+                            new_indices.remove(idx)
+                            for new_idx in new_indices:
+                                if new_idx not in Tblock.indices:
+                                    Tblock.indices.append(new_idx)
+                                else:
+                                    print("Warning this index is already in TBlock...\n DIdn't expect this")
+                            if type(elem) == IndexedFunction:
+                                for new_arg in elem.arguments:
+                                    if new_arg not in Tblock.arguments:
+                                        Tblock.arguments.append(new_arg)
+                                    # here I expect repeats of arguments
+                            
                             self.commuting.remove(elem)
-                        break
-            self.commuting.append(IndexedFunction(name,idx_ends,args+[time]))
-
+                            
+            rhsString=''
+            otherNames=[]
+            for elem in TblockEquals:
+                rhsString+=str(elem)
+                if elem.name != '\\epsilon' and elem.name not in otherNames:
+                    otherNames.append(elem.name)
+            
+            if len(otherNames)>1:
+                print("T has different kinds of V's in it...")
+                Tblock.name+='^?'
+            elif otherNames[0]=='V*':
+                Tblock.name+='^*'
+            
+            self.Tblocks[str(Tblock)]=rhsString
+            self.commuting.append(Tblock)
+                
+                
+    def create_baryon_blocks(self):
+        #combine epsilon tensor and leftover v's from creating tau
+        self.create_T_blocks()
+        
+        # now combine gammas by matching evecs on props
+        for elem in reversed(self.commuting):
+            if elem.name not in ['T','T^*']:
+                # get the evec index that matches each spin
+                evec_match_indices = []
+                for p in self.props:
+                    if p.left_indices.s in elem.indices:
+                        evec_match_indices.append(p.left_indices.c)
+                    elif p.right_indices.s in elem.indices:
+                        evec_match_indices.append(p.right_indices.c)
+                
+                for elem2 in reversed(self.commuting):
+                    if elem2.name in ['T','T^*']:
+                        if set(evec_match_indices) == set(elem2.indices):
+                            #print('make baryon block')
+                            Bblock=copy.deepcopy(elem2)
+                            Bblock.name=Bblock.name.replace('T','B')
+                            Bblock.indices+=elem.indices
+                            self.commuting.append(Bblock)
+                            self.Bblocks[str(Bblock)]=str(elem2)+str(elem)
+                            self.commuting.remove(elem)
+                            self.commuting.remove(elem2)
+            
+        
+            
+                
+                
     def short_props(self):
         new_props = []
         for prop in self.props:
@@ -84,7 +142,7 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
             
     def create_baryon_source(self):
         for b in self.commuting:    
-            if b.arguments[1]=='tf': #only if the baryon has 2 gammas, aka SU(4) only
+            if b.arguments[1]=='t_f': #only if the baryon has 2 gammas, aka SU(4) only
                 for i,contract_idx in enumerate(b.indices):
                     for prop in self.props:
                         if(contract_idx==prop.l):
@@ -92,7 +150,7 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                             self.props.remove(prop)
                             break
                         
-                b.arguments += ['ti']
+                b.arguments += ['t_i']
                 
                 
                 
