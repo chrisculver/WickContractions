@@ -122,6 +122,7 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                             Bblock=copy.deepcopy(elem2)
                             Bblock.name=Bblock.name.replace('T','B')
                             Bblock.indices+=elem.indices
+                            Bblock.arguments+=[elem.name]
                             self.commuting.append(Bblock)
                             self.Bblocks[str(Bblock)]=str(elem2)+str(elem)
                             self.commuting.remove(elem)
