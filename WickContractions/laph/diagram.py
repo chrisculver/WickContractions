@@ -18,7 +18,10 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
             for i,indices in enumerate([p.left_indices,p.right_indices]):
                 # swap color for eigenvector idx
                 color_idx = indices.c
-                idx='l_{'+str(lCnt)+'}'
+                if color_idx[0:2] == 'c_':
+                    idx='l_'+str(color_idx.split('_')[1])
+                else:
+                    idx='l_{'+str(lCnt)+'}'
                 lCnt+=1
                 indices.c=idx
                 args=[]
@@ -129,8 +132,34 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                             self.commuting.remove(elem2)
             
         
+    def combine_indices(self):
+        new_props = []
+        for p in self.props:
+            if (get_int(p.left_indices.c) != get_int(p.left_indices.s)) or (get_int(p.right_indices.c) != get_int(p.right_indices.s)):
+                raise ValueError("sub-sub script of indices dont match!\n Can't combine {} into combined indices".format(str(p)))
             
+            new_props.append(ShortProp(p.name,
+                                      get_int(p.left_indices.c),get_int(p.right_indices.c),
+                                       p.ti, p.tf)
+                                      )
+        
+        self.props=new_props
+            
+        new_commuting = []
+        
+        for c in self.commuting:
+            new_indices=[]
+            
+            for idx in c.indices:
+                new_idx = get_int(idx)
+                if new_idx not in new_indices:
+                    new_indices.append(new_idx)
                 
+                #"TODO: Check that one and only one other index matches")
+            
+            new_commuting.append( IndexedFunction(c.name,new_indices,c.arguments) )
+            
+        self.commuting=new_commuting
                 
     def short_props(self):
         new_props = []
@@ -139,7 +168,7 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                                     prop.left_indices.c[1:],prop.right_indices.c[1:],
                                     prop.ti,prop.tf))
         self.props = new_props
-
+    
             
     def create_baryon_source(self):
         for b in self.commuting:    
@@ -153,7 +182,9 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                         
                 b.arguments += ['t_i']
                 
-                
+
+def get_int(idx):
+    return idx.split('_')[1]
                 
 class ShortProp():
     def __init__(self, name, l, r, tl, tr):
