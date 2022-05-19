@@ -172,7 +172,7 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
             
     def create_baryon_source(self):
         for b in self.commuting:    
-            if b.arguments[1]=='t_f': #only if the baryon has 2 gammas, aka SU(4) only
+            if b.arguments[1]=='t_f': #the other B always has same indices
                 for i,contract_idx in enumerate(b.indices):
                     for prop in self.props:
                         if(contract_idx==prop.l):
@@ -180,7 +180,7 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                             self.props.remove(prop)
                             break
                         
-                b.arguments += ['t_i']
+                b.arguments.insert(1,'t_i')
                 
 
 def get_int(idx):
