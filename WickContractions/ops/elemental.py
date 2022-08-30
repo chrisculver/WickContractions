@@ -19,12 +19,12 @@ class ElementalOperator:
     def __str__(self):
         """Printing to string
         """
-        cStr="*"
+        cStr=""
         for c in self.commuting[:-1]:
-            cStr+=str(c)+"*"
+            cStr+=str(c)
         cStr+=str(self.commuting[-1])
         qStr=""
         for q in self.quarks[:-1]:
-            qStr+=str(q)+"*"
+            qStr+=str(q)
         qStr+=str(self.quarks[-1])
-        return str(self.coef)+cStr+'*'+qStr
+        return str(self.coef)+cStr+qStr
