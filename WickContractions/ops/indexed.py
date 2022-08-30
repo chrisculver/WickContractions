@@ -84,3 +84,13 @@ class IndexedFunction(IndexedObject):
             self_strings = self.indices + self.arguments
             other_strings = other.indices + other.arguments
             return (self_strings < other_strings)
+
+    def id(self):
+        arg_str = ''
+        for i in range(len(self.arguments)):
+            arg_str += self.arguments[i]
+            if(i!=len(self.arguments)-1):
+                arg_str += ','
+        
+        return self.name + '(' + arg_str + ')'
+        
