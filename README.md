@@ -5,6 +5,10 @@ quark fields.  The final result is a list of diagrams that are to be
 evaluated numerically to obtain the correlation function.
 
 
+## Installation
+
+Install locally in a conda environment with `pip install -e .`
+
 ## Examples
 Features of this code are being worked on in prototyping.nb, which includes a
 simple SU(4) baryon-baryon scattering contraction with LapH.
