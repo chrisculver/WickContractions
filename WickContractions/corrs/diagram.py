@@ -37,6 +37,13 @@ class Diagram:
         prop_str = ''.join([str(p) for p in self.props])
         return str(self.coef) + ' ' + ci_str + prop_str
 
+    def name(self):
+        """Print without coefficient
+        """
+        ci_str = ''.join([str(c) for c in self.commuting])
+        prop_str = ''.join([str(p) for p in self.props])
+        return ci_str + prop_str
+
     def __eq__(self, other):
         """Equality comparison
         """
