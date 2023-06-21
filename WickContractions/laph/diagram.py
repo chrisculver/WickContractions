@@ -182,6 +182,12 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                             break
                         
                 b.arguments.insert(1,'t_i')
+
+    def name(self):
+        s=""
+        for c in self.commuting:
+            s+=str(c)
+        return s
                 
 
 def get_int(idx):
