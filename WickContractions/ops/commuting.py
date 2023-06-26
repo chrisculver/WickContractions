@@ -19,7 +19,6 @@ class EpsilonTensor(IndexedObject):
         else:
             return 0
 
-
 class SpinMatrix(IndexedObject):
     def __init__(self,name,indices):
         self.name = name

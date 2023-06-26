@@ -2,6 +2,8 @@ import WickContractions.corrs.diagram
 import copy
 from WickContractions.ops.indexed import IndexedFunction
 
+# TODO: Users should probably make this themselves?
+
 class LDiagram(WickContractions.corrs.diagram.Diagram):
     def __init__(self, diag):
         if(type(diag) is not WickContractions.corrs.diagram.Diagram):
