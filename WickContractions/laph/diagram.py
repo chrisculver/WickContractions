@@ -57,52 +57,53 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
     
     
     def create_T_blocks(self):
-        color_obj_name = '\\epsilon' 
-        epsilons=[]
-        for elem in reversed(self.commuting):
-            if elem.name==color_obj_name:
-                epsilons.append(elem)
-                self.commuting.remove(elem)
+        for color_obj_name in ['\\delta','\\epsilon']:
+
+            epsilons=[]
+            for elem in reversed(self.commuting):
+                if elem.name==color_obj_name:
+                    epsilons.append(elem)
+                    self.commuting.remove(elem)
         
-        for e in epsilons:
-            # start a T function with no indices or arguments
-            Tblock = IndexedFunction('T',[],[])
-            TblockEquals = [e]
-            for idx in e.indices:
-                for elem in self.commuting:
-                    if elem.name not in ['T','T^*']:
-                        if idx in elem.indices:
-                            TblockEquals.append(elem)
-                            new_indices = list(elem.indices)
-                            new_indices.remove(idx)
-                            for new_idx in new_indices:
-                                if new_idx not in Tblock.indices:
-                                    Tblock.indices.append(new_idx)
-                                else:
-                                    print("Warning this index is already in TBlock...\n DIdn't expect this")
-                            if type(elem) == IndexedFunction:
-                                for new_arg in elem.arguments:
-                                    if new_arg not in Tblock.arguments:
-                                        Tblock.arguments.append(new_arg)
-                                    # here I expect repeats of arguments
-                            
-                            self.commuting.remove(elem)
-                            
-            rhsString=''
-            otherNames=[]
-            for elem in TblockEquals:
-                rhsString+=str(elem)
-                if elem.name != '\\epsilon' and elem.name not in otherNames:
-                    otherNames.append(elem.name)
-            
-            if len(otherNames)>1:
-                print("T has different kinds of V's in it...")
-                Tblock.name+='^?'
-            elif otherNames[0]=='V*':
-                Tblock.name+='^*'
-            
-            self.Tblocks[str(Tblock)]=rhsString
-            self.commuting.append(Tblock)
+            for e in epsilons:
+                # start a T function with no indices or arguments
+                Tblock = IndexedFunction('T',[],[])
+                TblockEquals = [e]
+                for idx in e.indices:
+                    for elem in self.commuting:
+                        if elem.name not in ['T','T^*']:
+                            if idx in elem.indices:
+                                TblockEquals.append(elem)
+                                new_indices = list(elem.indices)
+                                new_indices.remove(idx)
+                                for new_idx in new_indices:
+                                    if new_idx not in Tblock.indices:
+                                        Tblock.indices.append(new_idx)
+                                    else:
+                                        print("Warning this index is already in TBlock...\n DIdn't expect this")
+                                if type(elem) == IndexedFunction:
+                                    for new_arg in elem.arguments:
+                                        if new_arg not in Tblock.arguments:
+                                            Tblock.arguments.append(new_arg)
+                                        # here I expect repeats of arguments
+                                
+                                self.commuting.remove(elem)
+                                
+                rhsString=''
+                otherNames=[]
+                for elem in TblockEquals:
+                    rhsString+=str(elem)
+                    if elem.name != '\\epsilon' and elem.name not in otherNames:
+                        otherNames.append(elem.name)
+                
+                if len(otherNames)>1:
+                    print("T has different kinds of V's in it...")
+                    Tblock.name+='^?'
+                elif otherNames[0]=='V*':
+                    Tblock.name+='^*'
+                
+                self.Tblocks[str(Tblock)]=rhsString
+                self.commuting.append(Tblock)
                 
                 
     def create_baryon_blocks(self):
@@ -183,6 +184,12 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                             break
                         
                 b.arguments.insert(1,'t_i')
+
+    def name(self):
+        s=""
+        for c in self.commuting:
+            s+=str(c)
+        return s
                 
 
 def get_int(idx):
