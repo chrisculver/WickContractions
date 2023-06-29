@@ -4,7 +4,7 @@ setup(
   name='WickContractions',
   version='0.1.0',
   author='Chris Culver',
-  packages=['WickContractions'],
+  packages=['WickContractions', 'WickContractions.wick'],
   license='LICENSE.txt',
   description='Package for wick contractions',
   long_description=open('README.md').read(),
