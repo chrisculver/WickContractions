@@ -96,10 +96,11 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                     if elem.name != '\\epsilon' and elem.name not in otherNames:
                         otherNames.append(elem.name)
                 
-                if len(otherNames)>1:
-                    print("T has different kinds of V's in it...")
-                    Tblock.name+='^?'
-                elif otherNames[0]=='V*':
+                #if len(otherNames)>1:
+                #    print("T has different kinds of V's in it...")
+                #    Tblock.name+='^?'
+                
+                if otherNames[0]=='V*':
                     Tblock.name+='^*'
                 
                 self.Tblocks[str(Tblock)]=rhsString
@@ -172,7 +173,8 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                                     prop.ti,prop.tf))
         self.props = new_props
     
-            
+    
+
     def create_baryon_source(self):
         for b in self.commuting:    
             if b.arguments[1]=='t_f': #the other B always has same indices
@@ -190,6 +192,13 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
         for c in self.commuting:
             s+=str(c)
         return s
+    
+
+    def simplify(self):
+        self.create_T_blocks()
+        self.create_baryon_blocks()
+        self.combine_indices()
+        self.create_baryon_source()
                 
 
 def get_int(idx):
