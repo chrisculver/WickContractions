@@ -1,3 +1,4 @@
+name: rtdWC
 channels:
   - conda-forge
 dependencies:
