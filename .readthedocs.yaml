@@ -16,7 +16,7 @@ sphinx:
   configuration: docs/conf.py
 
 conda: 
-  file: .readthedocs-environment.yml
+  file: docs/readthedocs-environment.yml
 
 python:
   install:
