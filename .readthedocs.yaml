@@ -15,11 +15,9 @@ build:
 sphinx:
   configuration: docs/conf.py
 
-# We recommend specifying your dependencies to enable reproducible builds:
-# https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
+conda: 
+  file: .readthedocs-environment.yml
+
 python:
   install:
   - requirements: requirements.py
-
-conda: 
-  file: .readthedocs-environment.yml
