@@ -187,6 +187,7 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                         
                 b.arguments.insert(1,'t_i')
 
+
     def name(self):
         s=""
         for c in self.commuting:

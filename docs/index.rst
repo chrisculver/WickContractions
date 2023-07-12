@@ -6,10 +6,9 @@
 Wick Contractions
 =================
 
-This code is a work in progress, and is expanding beyond just a repository
-for performing wick contractions.  Functionality will be added to make it more
-like http://github.com/chrisculver/CorrelationMatrixManager, which only works
-for mesons.  This code base should work for any object composed of quarks.
+This code applies Wick's theorem to correlation functions containing quark fields.  
+This code is largely meant to be used with something like `PyCorrelationMatrixManager <https://github.com/chrisculver/PyCorrelationMatrixManager>`_,
+but has also been used to study hadron structure via `4PointFunctions <https://github.com/chrisculver/4PointFunctions>`_.
 
 .. toctree::
    :maxdepth: 2
@@ -19,6 +18,11 @@ for mesons.  This code base should work for any object composed of quarks.
    user_guide/operators.rst
    user_guide/contractions.rst
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Examples
+
+   examples/PionCorrelator.ipynb
 
 .. toctree::
   :maxdepth: 3
