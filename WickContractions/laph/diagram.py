@@ -56,61 +56,103 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
         return []
     
     
-    def create_T_blocks(self):
-        for color_obj_name in ['\\delta','\\epsilon']:
+    def create_b_blocks(self):
+        color_obj_name='\\epsilon'
 
-            epsilons=[]
-            for elem in reversed(self.commuting):
-                if elem.name==color_obj_name:
-                    epsilons.append(elem)
-                    self.commuting.remove(elem)
-        
-            for e in epsilons:
-                # start a T function with no indices or arguments
-                Tblock = IndexedFunction('T',[],[])
-                TblockEquals = [e]
-                for idx in e.indices:
-                    for elem in self.commuting:
-                        if elem.name not in ['T','T^*']:
-                            if idx in elem.indices:
-                                TblockEquals.append(elem)
-                                new_indices = list(elem.indices)
-                                new_indices.remove(idx)
-                                for new_idx in new_indices:
-                                    if new_idx not in Tblock.indices:
-                                        Tblock.indices.append(new_idx)
-                                    else:
-                                        print("Warning this index is already in TBlock...\n DIdn't expect this")
-                                if type(elem) == IndexedFunction:
-                                    for new_arg in elem.arguments:
-                                        if new_arg not in Tblock.arguments:
-                                            Tblock.arguments.append(new_arg)
-                                        # here I expect repeats of arguments
-                                
-                                self.commuting.remove(elem)
-                                
-                rhsString=''
-                otherNames=[]
-                for elem in TblockEquals:
-                    rhsString+=str(elem)
-                    if elem.name != '\\epsilon' and elem.name not in otherNames:
-                        otherNames.append(elem.name)
+        epsilons=[]
+        for elem in reversed(self.commuting):
+            if elem.name==color_obj_name:
+                epsilons.append(elem)
+                self.commuting.remove(elem)
+    
+        for e in epsilons:
+            # start a T function with no indices or arguments
+            Tblock = IndexedFunction('b',[],[])
+            TblockEquals = [e]
+            for idx in e.indices:
+                for elem in self.commuting:
+                    if elem.name not in ['b','b^*']:
+                        if idx in elem.indices:
+                            TblockEquals.append(elem)
+                            new_indices = list(elem.indices)
+                            new_indices.remove(idx)
+                            for new_idx in new_indices:
+                                if new_idx not in Tblock.indices:
+                                    Tblock.indices.append(new_idx)
+                                else:
+                                    print("Warning this index is already in TBlock...\n DIdn't expect this")
+                            if type(elem) == IndexedFunction:
+                                for new_arg in elem.arguments:
+                                    if new_arg not in Tblock.arguments:
+                                        Tblock.arguments.append(new_arg)
+                                    # here I expect repeats of arguments
+                            
+                            self.commuting.remove(elem)
+                            
+            rhsString=''
+            otherNames=[]
+            for elem in TblockEquals:
+                rhsString+=str(elem)
+                if elem.name != '\\epsilon' and elem.name not in otherNames:
+                    otherNames.append(elem.name)
+            
+            if len(otherNames)>1:
+                print("b has different kinds of V's in it...")
+                Tblock.name+='^?'
+            
+            if otherNames[0]=='V*':
+                Tblock.name+='^*'
+            
+            self.Tblocks[str(Tblock)]=rhsString
+            self.commuting.append(Tblock)
+
+    def create_m_blocks(self):
+        color_obj_name='\\delta'
+
+        epsilons=[]
+        for elem in reversed(self.commuting):
+            if elem.name==color_obj_name:
+                epsilons.append(elem)
+                self.commuting.remove(elem)
+    
+        for e in epsilons:
+            # start a T function with no indices or arguments
+            Tblock = IndexedFunction('m',[],[])
+            TblockEquals = [e]
+            for idx in e.indices:
+                for elem in self.commuting:
+                    if elem.name not in ['m']:
+                        if idx in elem.indices:
+                            TblockEquals.append(elem)
+                            new_indices = list(elem.indices)
+                            new_indices.remove(idx)
+                            for new_idx in new_indices:
+                                if new_idx not in Tblock.indices:
+                                    Tblock.indices.append(new_idx)
+                                else:
+                                    print("Warning this index is already in TBlock...\n DIdn't expect this")
+                            if type(elem) == IndexedFunction:
+                                for new_arg in elem.arguments:
+                                    if new_arg not in Tblock.arguments:
+                                        Tblock.arguments.append(new_arg)
+                                    # here I expect repeats of arguments
+                            
+                            self.commuting.remove(elem)
+                            
+            rhsString=''
+            otherNames=[]
+            for elem in TblockEquals:
+                rhsString+=str(elem)
+                if elem.name != '\\epsilon' and elem.name not in otherNames:
+                    otherNames.append(elem.name)
+            
+            #if otherNames[0]=='V*':
+            #    Tblock.name+='^*'
+            
+            self.Tblocks[str(Tblock)]=rhsString
+            self.commuting.append(Tblock) 
                 
-                #if len(otherNames)>1:
-                #    print("T has different kinds of V's in it...")
-                #    Tblock.name+='^?'
-                
-                if otherNames[0]=='V*':
-                    Tblock.name+='^*'
-                
-                self.Tblocks[str(Tblock)]=rhsString
-                self.commuting.append(Tblock)
-                
-                
-    def create_baryon_blocks(self):
-        #combine epsilon tensor and leftover v's from creating tau
-        self.create_T_blocks()
-        
+    def create_hadron_blocks(self):
         # now combine gammas by matching evecs on props
         for elem in reversed(self.commuting):
             if elem.name not in ['T','T^*']:
@@ -123,11 +165,11 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                         evec_match_indices.append(p.right_indices.c)
                 
                 for elem2 in reversed(self.commuting):
-                    if elem2.name in ['T','T^*']:
+                    if elem2.name in ['b','b^*','m']:
                         if set(evec_match_indices) == set(elem2.indices):
                             #print('make baryon block')
                             Bblock=copy.deepcopy(elem2)
-                            Bblock.name=Bblock.name.replace('T','B')
+                            Bblock.name=Bblock.name.replace('b','B').replace('m','M')
                             Bblock.indices+=elem.indices
                             Bblock.arguments+=[elem.name]
                             self.commuting.append(Bblock)
@@ -175,18 +217,26 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
     
     
 
-    def create_baryon_source(self):
-        for b in self.commuting:    
-            if b.arguments[1]=='t_f': #the other B always has same indices
-                for i,contract_idx in enumerate(b.indices):
+    def create_hadron_source(self):
+        for c in self.commuting:    
+            if c.arguments[1]=='t_f': #the other B always has same indices
+                for i,contract_idx in enumerate(c.indices):
                     for prop in self.props:
                         if(contract_idx==prop.l):
-                            b.indices[i]=prop.r
+                            c.indices[i]=prop.r
                             self.props.remove(prop)
                             break
                         
-                b.arguments.insert(1,'t_i')
-
+                c.arguments.insert(1,'t_i')
+        
+        for c in self.commuting:
+            if c.name[0]=='M':
+                contract_idx = c.indices[1]
+                for prop in self.props:
+                    if(contract_idx==prop.l):
+                        c.indices[1]=prop.r
+                        self.props.remove(prop)
+                        break
 
     def name(self):
         s=""
