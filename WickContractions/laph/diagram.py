@@ -250,7 +250,29 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
         self.create_baryon_blocks()
         self.combine_indices()
         self.create_baryon_source()
-                
+
+    def as_graph(d):
+        tst=copy.deepcopy(d)
+
+        graph = {}
+
+        for b in reversed(tst.commuting):
+            tst.commuting.remove(b)
+            #bIdx=allBaryonTensors[b.id()]
+            for idx in reversed(b.indices):
+                for e in tst.commuting:
+                    if idx in e.indices:
+                        #fIdx=allBaryonTensors[e.id()]
+                        contraction=str(b.id())+"|"+str(e.id())
+                        if contraction in graph:
+                            graph[contraction].append([b.indices.index(idx),e.indices.index(idx)])
+                        else:
+                            graph[contraction]=[[b.indices.index(idx),e.indices.index(idx)]]
+
+                        break
+
+        return graph
+
 
 def get_int(idx):
     return idx.split('_')[1]
