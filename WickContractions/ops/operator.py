@@ -17,3 +17,10 @@ class Operator:
         for e in self.elementals[:-1]:
             eStr+=str(e)+"+"
         return eStr+str(self.elementals[-1])
+    
+    def get_gammas(self):
+        gammas = []
+        for c in self.elementals[0].commuting:
+            if "\\Gamma" in c.name:
+                gammas.append(c.name)
+        return gammas
