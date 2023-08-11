@@ -1,6 +1,6 @@
 import WickContractions.corrs.diagram
 import copy
-from WickContractions.ops.indexed import IndexedFunction
+from WickContractions.ops.indexed import IndexedFunction, IndexedObject
 
 # TODO: Users should probably make this themselves?
 
@@ -254,6 +254,16 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
     def as_graph(d):
         tst=copy.deepcopy(d)
 
+        id_map={}
+        nameIdx=0
+        for i,c in enumerate(tst.commuting):
+            if c.id() in id_map:
+                tst.commuting[i]=IndexedObject(id_map[c.id()],c.indices)
+            else:
+                id_map[nameIdx]=c.id()
+                tst.commuting[i]=IndexedObject(nameIdx,c.indices)
+                nameIdx+=1
+
         graph = {}
 
         for b in reversed(tst.commuting):
@@ -263,7 +273,7 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
                 for e in tst.commuting:
                     if idx in e.indices:
                         #fIdx=allBaryonTensors[e.id()]
-                        contraction=str(b.id())+"|"+str(e.id())
+                        contraction=(str(b.id())+"|"+str(e.id()))
                         if contraction in graph:
                             graph[contraction].append([b.indices.index(idx),e.indices.index(idx)])
                         else:
@@ -271,7 +281,7 @@ class LDiagram(WickContractions.corrs.diagram.Diagram):
 
                         break
 
-        return graph
+        return id_map, graph
 
 
 def get_int(idx):

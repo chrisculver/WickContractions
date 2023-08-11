@@ -18,6 +18,9 @@ class IndexedObject:
         tmp.rotate(1)
         self.indices=list(tmp)
 
+    def id(self):
+        return self.name
+
     def __str__(self):
         """String printer
         """
