@@ -2,7 +2,7 @@ from WickContractions.ops.commuting import *
 
 def test_epsilon():
     eps3 = EpsilonTensor(['a','b','c'])
-    assert eps3.name=='eps'
+    assert eps3.name=='\\epsilon'
     assert eps3.indices==['a','b','c']
     
     epsPLUS = EpsilonTensor(['b','c','a'])
